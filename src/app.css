@@ -1,0 +1,11 @@
+@import 'tailwindcss';
+
+body {
+    background-color: black;
+    padding: 8px;
+}
+canvas {
+    width: 100%;
+    border: 4px solid white;
+    border-radius: 8px;
+}
