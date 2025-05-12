@@ -1,38 +1,79 @@
-# sv
+🧠 Project Context: Svelte + Threlte Game Engine
+This project is a web-based game engine built using:
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+Svelte 5 for UI, reactivity, and component structure
 
-## Creating a project
+Threlte for 3D rendering and GLTF/Three.js integration
 
-If you're seeing this, you've probably already done this step. Congrats!
+A custom GameObject system inspired by Unity/Godot
 
-```bash
-# create a new project in the current directory
-npx sv create
+📁 File Structure Overview
+Folder	Purpose
+src/lib/game/objects/	GameObject prefabs (e.g. Avatar.ts, CameraRig.ts)
+src/lib/game/components/scene/	SceneComponents (3D render logic; one per GameObject)
+src/lib/game/components/logic/	LogicComponents (update behavior, signal handling)
+src/lib/models/	Auto-generated .svelte components from GLTFs
+static/models/	Raw .glb or .gltf files for transformation
+scripts/transform-models.ts	CLI pipeline for transforming GLTFs to Threlte components
 
-# create a new project in my-app
-npx sv create my-app
-```
+🎮 GameObject System
+Every entity in the game is a GameObject. It can:
 
-## Developing
+Attach LogicComponents (behavior)
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Include a SceneComponent for 3D representation
 
-```bash
-npm run dev
+Own a transform store (position, rotation, scale)
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+Be uniquely registered and referenced via a GameObjectRegistry
 
-## Building
+🧱 GameObjectHost
+GameObjectHost.svelte is a special wrapper that:
 
-To create a production version of your app:
+Creates a GameObject via create(props)
 
-```bash
-npm run build
-```
+Registers it in the GameObjectRegistry
 
-You can preview the production build with `npm run preview`.
+Sets Svelte context (setContext(GAME_OBJECT, ...))
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Provides that context to its slot (where the SceneComponent is rendered)
+
+Binds the GameObject’s object3D as a T.Group to integrate with Threlte
+
+📡 Signals
+Each GameObject supports named signal channels like onHit, onHeal, etc.
+Components can subscribe with:
+
+ts
+Copy
+Edit
+this.host.getSignal('onHit').subscribe(({ damage }) => ...)
+Global signals are managed via a GlobalSignalBus singleton.
+
+🧠 Manager & State Machine
+Manager.ts manages global game state and lifecycle:
+
+Defines states like init, playing, paused
+
+Each state has enter()/exit() callbacks
+
+Can spawn or destroy GameObjects on state transitions
+
+🧾 HUD and UI Integration
+UI is built with Svelte
+
+The HUD subscribes to GameObject state (e.g. Avatar health, position)
+
+Uses useGameObject('Avatar') to safely connect after GameObject spawn
+
+Interactive UI elements (e.g. buttons) emit signals or modify GameObjects via the registry or global bus
+
+🧪 Asset Pipeline
+Place .glb/.gltf models in static/models/
+
+Run pnpm run transform:models or watch:models to convert them
+
+Output .svelte components go to src/lib/models
+
+Transforms can be run manually or automatically via chokidar-cli
+
