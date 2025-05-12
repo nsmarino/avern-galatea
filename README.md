@@ -1,4 +1,4 @@
-# Project Context: Svelte + Threlte Game Engine
+# avern galatea
 This project is a web-based game engine built using:
 
 - Svelte 5 for UI, reactivity, and component structure
