@@ -16,6 +16,7 @@ This project is a web-based game engine built using:
 | `src/lib/game/objects/`           | GameObject prefabs (e.g. `Avatar.ts`, `CameraRig.ts`)        |
 | `src/lib/game/components/scene/`  | SceneComponents (3D render logic; one per GameObject)        |
 | `src/lib/game/components/logic/`  | LogicComponents (update behavior, signal handling)           |
+| `src/lib/game/UI/`                | Svelte components for user interface                         |
 | `src/lib/models/`                 | Auto-generated `.svelte` components from GLTFs               |
 | `static/models/`                  | Raw `.glb` or `.gltf` files for transformation               |
 | `scripts/transform-models.ts`     | CLI pipeline for transforming GLTFs to Threlte components    |
