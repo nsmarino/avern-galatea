@@ -7,9 +7,9 @@ This project is a web-based game engine built using:
 
 - A custom GameObject system inspired by Unity/Godot
 
-# File Structure Overview
+## File Structure Overview
 
-## 📁 File Structure Overview
+### 📁 File Structure Overview
 
 | Folder                             | Purpose                                                      |
 |------------------------------------|--------------------------------------------------------------|
@@ -20,7 +20,7 @@ This project is a web-based game engine built using:
 | `static/models/`                  | Raw `.glb` or `.gltf` files for transformation               |
 | `scripts/transform-models.ts`     | CLI pipeline for transforming GLTFs to Threlte components    |
 
-# GameObject System
+## GameObject System
 Every entity in the game is a GameObject. It can:
 
 - Attach LogicComponents (behavior)
@@ -31,7 +31,7 @@ Every entity in the game is a GameObject. It can:
 
 - Be uniquely registered and referenced via a GameObjectRegistry
 
-# GameObjectHost
+## GameObjectHost
 GameObjectHost.svelte is a special wrapper that:
 
 - Creates a GameObject via create(props)
@@ -44,7 +44,7 @@ GameObjectHost.svelte is a special wrapper that:
 
 - Binds the GameObject’s object3D as a T.Group to integrate with Threlte
 
-# Signals
+## Signals
 - Each GameObject supports named signal channels like onHit, onHeal, etc.
 Components can subscribe with:
 ```
@@ -53,7 +53,7 @@ this.host.getSignal('onHit').subscribe(({ damage }) => ...)
 - Global signals are managed via a GlobalSignalBus singleton.
 
 
-# Manager & State Machine
+## Manager & State Machine
 Manager.ts manages global game state and lifecycle:
 
 - Defines states like init, playing, paused
@@ -62,7 +62,7 @@ Manager.ts manages global game state and lifecycle:
 
 - Can spawn or destroy GameObjects on state transitions
 
-# HUD and UI Integration
+## HUD and UI Integration
 - UI is built with Svelte
 
 - The HUD subscribes to GameObject state (e.g. Avatar health, position)
@@ -71,7 +71,7 @@ Manager.ts manages global game state and lifecycle:
 
 - Interactive UI elements (e.g. buttons) emit signals or modify GameObjects via the registry or global bus
 
-# Asset Pipeline
+## Asset Pipeline
 - Place .glb/.gltf models in `static/models/`
 
 - Run `pnpm run transform:models` or `watch:models` to convert them
